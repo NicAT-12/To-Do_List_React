@@ -1,11 +1,18 @@
-import { useState } from "react";
-import { MdOutlineAddCircleOutline } from "react-icons/md";
+import { useState, useEffect } from "react";
 
-
-import TodoItem from "./components/TodoItem";
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
 
 const App = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem('savedTasks');
+
+    try {
+      return savedTasks ? JSON.parse(savedTasks) : [];
+    } catch {
+      return [];
+    }
+  });
   const [write, setWrite] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState('');
@@ -55,6 +62,8 @@ const App = () => {
   };
 
   const saveEditTask = (idToEdit) => {
+    if (editText.trim() === '') return;
+
     setTasks(
       tasks.map((task) => {
         if (task.id === idToEdit) {
@@ -69,40 +78,31 @@ const App = () => {
     setEditingId(null);
     setEditText('');
   };
+
+  useEffect(() => {
+    localStorage.setItem('savedTasks', JSON.stringify(tasks));
+  }, [tasks]);
+
   return (
     <main className="app">
       <h1 className="app__title">TO-DO</h1>
 
-      <form onSubmit={handleSubmit} className="todo-form">
-        <input
-          onChange={(e) => setWrite(e.target.value)}
-          value={write}
-          type="text"
-          placeholder="Add a task..."
-        />
+      <TodoForm
+        write={write}
+        setWrite={setWrite}
+        handleSubmit={handleSubmit}
+      />
 
-        <button type="submit">
-          <MdOutlineAddCircleOutline />
-        </button>
-      </form>
-
-      <ul className="todo-list">
-        {
-          tasks.map((task) => (
-            <TodoItem
-              key={task.id}
-              task={task}
-              deleteTask={deleteTask}
-              toggleTask={toggleTask}
-              editingId={editingId}
-              editText={editText}
-              setEditText={setEditText}
-              startEditTask={startEditTask}
-              saveEditTask={saveEditTask}
-            />
-          ))
-        }
-      </ul>
+      <TodoList
+        tasks={tasks}
+        deleteTask={deleteTask}
+        toggleTask={toggleTask}
+        editingId={editingId}
+        editText={editText}
+        setEditText={setEditText}
+        startEditTask={startEditTask}
+        saveEditTask={saveEditTask}
+      />
     </main>
   )
 };
