@@ -1,0 +1,17 @@
+@use '../utils/variables' as *;
+
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.todo-list__empty {
+    background: $surface-color;
+    border: 1px dashed $border-color;
+    border-radius: 20px;
+    padding: 40px 24px;
+    text-align: center;
+    color: $text-muted;
+    font-size: 1rem;
+}

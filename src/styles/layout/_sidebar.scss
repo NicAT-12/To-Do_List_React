@@ -1,0 +1,190 @@
+@use '../utils/variables' as *;
+
+.sidebar {
+    min-height: 100vh;
+    padding: 28px 22px;
+    background: $surface-color;
+    border-right: 1px solid $border-color;
+}
+
+.sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 36px;
+}
+
+.sidebar__logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: $primary-color;
+    color: $surface-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.sidebar__title {
+    font-size: 1.35rem;
+    color: $text-primary;
+}
+
+.sidebar__nav,
+.sidebar__categories {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar__nav {
+    margin-bottom: 20px;
+}
+
+.sidebar__nav .sidebar__subtitle {
+    margin-bottom: 6px;
+}
+
+.sidebar__link,
+.sidebar__list-item {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: transparent;
+    color: $text-secondary;
+    text-align: left;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.sidebar__link:hover,
+.sidebar__list-item:hover {
+    background: $card-hover;
+    color: $text-primary;
+}
+
+.sidebar__link--active {
+    background: $sidebar-active;
+    color: $primary-hover;
+}
+
+.sidebar__subtitle {
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $text-muted;
+}
+
+.sidebar__categories-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar__add-category-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: $primary-color;
+    color: $surface-color;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.sidebar__add-category-btn:hover {
+    background: $primary-hover;
+}
+
+.sidebar__category-form {
+    display: flex;
+    gap: 10px;
+}
+
+.sidebar__category-form input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: $background-color;
+    border: 1px solid $border-color;
+    color: $text-primary;
+}
+
+.sidebar__empty-categories {
+    color: $text-muted;
+    font-size: 0.9rem;
+}
+
+.sidebar__category-item {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: $card-hover;
+    color: $text-primary;
+    text-align: left;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.sidebar__category-item:hover {
+    background: $card-hover;
+    color: $text-primary;
+}
+
+.sidebar__category-item--active {
+    background: $sidebar-active;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+}
+
+.sidebar__category-submit {
+    text-align: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: $primary-color;
+    color: $surface-color;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.sidebar__category-submit:hover {
+    background: $primary-hover;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        min-height: auto;
+        border-right: none;
+        border-bottom: 1px solid $border-color;
+    }
+
+    .sidebar__nav,
+    .sidebar__categories {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .sidebar__link {
+        width: auto;
+    }
+
+    .sidebar__categories-header {
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .sidebar {
+        padding: 20px 16px;
+    }
+
+    .sidebar__brand {
+        margin-bottom: 24px;
+    }
+
+    .sidebar__categories {
+        display: flex;
+    }
+}

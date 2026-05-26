@@ -1,0 +1,63 @@
+@use '../utils/variables' as *;
+
+.todo-app {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    background: $background-color;
+    color: $text-primary;
+}
+
+.todo-main {
+    min-height: 100vh;
+    padding: 32px;
+    background: linear-gradient(135deg, #111827, $background-color);
+}
+
+.app {
+    width: 100%;
+    background: $surface-color;
+    border-radius: 28px;
+    padding: 32px;
+    box-shadow: 0 10px 30px $shadow-color;
+}
+
+.app__title {
+    font-size: 2.4rem;
+    margin-bottom: 28px;
+    color: $text-primary;
+}
+
+@media (max-width: 900px) {
+    .todo-app {
+        grid-template-columns: 1fr;
+    }
+
+    .todo-main {
+        padding: 24px;
+    }
+
+    .app {
+        padding: 24px;
+    }
+
+    .app__title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 520px) {
+    .todo-main {
+        padding: 16px;
+    }
+
+    .app {
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .app__title {
+        font-size: 1.7rem;
+    }
+}

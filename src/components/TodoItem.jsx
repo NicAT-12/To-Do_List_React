@@ -8,7 +8,8 @@ const TodoItem = ({
     editText,
     setEditText,
     startEditTask,
-    saveEditTask
+    saveEditTask,
+    cancelEditTask
 }) => {
     return (
         <li
@@ -35,11 +36,31 @@ const TodoItem = ({
                             >
                                 Save
                             </button>
+
+                            <button
+                                className="todo-item__cancel-btn"
+                                onClick={cancelEditTask}
+                            >
+                                Cancel
+                            </button>
                         </div>
                     )
                     : (
                         <>
-                            <span>{task.text}</span>
+                            <div className="todo-item__content">
+                                <span>{task.text}</span>
+
+                                <small>
+                                    {task.completed ? 'Completed Task' : 'Pending Task'}
+                                </small>
+                                {
+                                    task.category && (
+                                        <span className="todo-item__category">
+                                            {task.category}
+                                        </span>
+                                    )
+                                }
+                            </div>
 
                             <div className="todo-item__actions">
                                 <button

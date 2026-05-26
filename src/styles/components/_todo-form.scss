@@ -1,0 +1,61 @@
+@use '../utils/variables' as *;
+
+.todo-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.todo-form input {
+    flex: 1;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: $background-color;
+    border: 1px solid $border-color;
+    color: $text-primary;
+    font-size: 1rem;
+}
+
+.todo-form button {
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: $primary-color;
+    color: $surface-color;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.todo-form button:hover {
+    background: $primary-hover;
+    transform: translateY(-2px);
+}
+
+.todo-form select {
+    padding: 14px 48px 14px 16px;
+    border-radius: 5px;
+    background: $background-color;
+    border: 1px solid $border-color;
+    color: $text-primary;
+    font-size: 1rem;
+    min-width: 180px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.todo-form select:focus {
+    border-color: $primary-color;
+}
+
+@media (max-width: 520px) {
+    .todo-form {
+        flex-direction: column;
+    }
+
+    .todo-form button {
+        width: 100%;
+    }
+
+    .todo-form select {
+        width: 100%;
+    }
+}

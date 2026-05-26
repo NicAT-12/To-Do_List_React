@@ -1,6 +1,13 @@
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 
-const TodoForm = ({ write, setWrite, handleSubmit }) => {
+const TodoForm = ({
+    write,
+    setWrite,
+    handleSubmit,
+    categories,
+    selectedCategory,
+    setSelectedCategory
+}) => {
     return (
         <form onSubmit={handleSubmit} className="todo-form">
             <input
@@ -9,6 +16,25 @@ const TodoForm = ({ write, setWrite, handleSubmit }) => {
                 type="text"
                 placeholder="Add a task..."
             />
+
+            <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+                <option value="">
+                    No category
+                </option>
+                {
+                    categories.map((category) => (
+                        <option
+                            key={category}
+                            value={category}
+                        >
+                            {category}
+                        </option>
+                    ))
+                }
+            </select>
 
             <button type="submit">
                 <MdOutlineAddCircleOutline />

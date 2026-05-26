@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
+import Sidebar from "./layout/Sidebar";
+import Header from "./layout/Header";
+import StatsCard from "./components/StatsCard";
 
 const App = () => {
   const [tasks, setTasks] = useState(() => {
@@ -16,6 +19,21 @@ const App = () => {
   const [write, setWrite] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState('');
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [categories, setCategories] = useState(() => {
+    const savedCategories = localStorage.getItem('savedCategories');
+
+    try {
+      return savedCategories ? JSON.parse(savedCategories) : []
+    } catch {
+      return [];
+    }
+  });
+  const [categoryName, setCategoryName] = useState('');
+  const [showCategoryInput, setShowCategoryInput] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,11 +45,13 @@ const App = () => {
       {
         text: write,
         completed: false,
-        id: Date.now()
+        id: Date.now(),
+        category: selectedCategory
       }
     ]);
 
     setWrite('');
+    setSelectedCategory('');
   };
 
   const deleteTask = (idToDelete) => {
@@ -81,28 +101,107 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem('savedTasks', JSON.stringify(tasks));
-  }, [tasks]);
+    localStorage.setItem('savedCategories', JSON.stringify(categories));
+  }, [tasks, categories]);
+
+  const completedTasks = tasks.filter((task) => {
+    return task.completed
+  });
+
+  const pendingTasks = tasks.filter((task) => {
+    return !task.completed
+  });
+
+  const cancelEditTask = () => {
+    setEditingId(null);
+    setEditText('');
+  };
+
+  const visibleTasks = tasks.filter((task) => {
+    const matchesFilter =
+      filter === 'all' ||
+      filter === 'completed' && task.completed ||
+      filter === 'pending' && !task.completed;
+    
+    const matchesCategory = 
+      activeCategory === '' || task.category === activeCategory;
+
+    const normalizedText = task.text.toLowerCase();
+    const normalizedSearch = search.trim().toLocaleLowerCase();
+
+    const matchesSearch = normalizedText.includes(normalizedSearch);
+
+    return matchesFilter && matchesSearch && matchesCategory;
+  });
+
+  const addCategory = () => {
+    if (categoryName.trim() === '') return;
+
+    const duplicated = categories.find((category) => {
+      return category.toLowerCase() === categoryName.toLowerCase()
+    });
+
+    if (duplicated) return;
+
+    setCategories([
+      ...categories,
+      categoryName
+    ]);
+
+    setCategoryName('');
+    setShowCategoryInput(false);
+  };
 
   return (
-    <main className="app">
-      <h1 className="app__title">TO-DO</h1>
-
-      <TodoForm
-        write={write}
-        setWrite={setWrite}
-        handleSubmit={handleSubmit}
+    <main className="todo-app">
+      <Sidebar
+        filter={filter}
+        setFilter={setFilter}
+        categories={categories}
+        categoryName={categoryName}
+        setCategoryName={setCategoryName}
+        addCategory={addCategory}
+        showCategoryInput={showCategoryInput}
+        setShowCategoryInput={setShowCategoryInput}
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
       />
 
-      <TodoList
-        tasks={tasks}
-        deleteTask={deleteTask}
-        toggleTask={toggleTask}
-        editingId={editingId}
-        editText={editText}
-        setEditText={setEditText}
-        startEditTask={startEditTask}
-        saveEditTask={saveEditTask}
-      />
+      <section className="todo-main">
+        <Header
+          search={search}
+          setSearch={setSearch}
+        />
+        <section className="stats">
+          <StatsCard title="Total Tasks" value={tasks.length} />
+          <StatsCard title="Completed" value={completedTasks.length} />
+          <StatsCard title="Pending" value={pendingTasks.length} />
+        </section>
+        <div className="app">
+          <h1 className="app__title">TO DO</h1>
+
+          <TodoForm
+            write={write}
+            setWrite={setWrite}
+            handleSubmit={handleSubmit}
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
+
+          <TodoList
+            visibleTasks={visibleTasks}
+            deleteTask={deleteTask}
+            toggleTask={toggleTask}
+            editingId={editingId}
+            editText={editText}
+            setEditText={setEditText}
+            startEditTask={startEditTask}
+            saveEditTask={saveEditTask}
+            cancelEditTask={cancelEditTask}
+          />
+        </div>
+      </section>
     </main>
   )
 };
