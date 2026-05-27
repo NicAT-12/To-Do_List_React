@@ -1,4 +1,5 @@
 import { FaCheck } from "react-icons/fa6";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Sidebar = ({
     filter,
@@ -10,7 +11,9 @@ const Sidebar = ({
     showCategoryInput,
     setShowCategoryInput,
     activeCategory,
-    setActiveCategory
+    setActiveCategory,
+    deleteCategory,
+    tasks
 }) => {
     return (
         <aside className="sidebar">
@@ -27,46 +30,56 @@ const Sidebar = ({
                     General
                 </h3>
 
-                <button onClick={() => {
-                    setFilter('all');
-                    setActiveCategory('');
-                }}
-                    className={
-                        filter === 'all' && activeCategory === ''
-                            ? 'sidebar__link sidebar__link--active'
-                            : 'sidebar__link'
-                    }>
-                    All Tasks
-                </button>
+                <div className="sidebar__filters">
+                    <button
+                        onClick={() => {
+                            setFilter('all');
+                            setActiveCategory('');
+                        }}
+                        className={
+                            filter === 'all' && activeCategory === ''
+                                ? 'sidebar__link sidebar__link--active'
+                                : 'sidebar__link'
+                        }
+                    >
+                        All Tasks
+                    </button>
 
-                <button onClick={() => {
-                    setFilter('pending');
-                    setActiveCategory('');
-                }}
-                    className={
-                        filter === 'pending' && activeCategory === ''
-                            ? 'sidebar__link sidebar__link--active'
-                            : 'sidebar__link'
-                    }>
-                    Pending
-                </button>
+                    <button
+                        onClick={() => {
+                            setFilter('pending');
+                            setActiveCategory('');
+                        }}
+                        className={
+                            filter === 'pending' && activeCategory === ''
+                                ? 'sidebar__link sidebar__link--active'
+                                : 'sidebar__link'
+                        }
+                    >
+                        Pending
+                    </button>
 
-                <button onClick={() => {
-                    setFilter('completed');
-                    setActiveCategory('');
-                }}
-                    className={
-                        filter === 'completed' && activeCategory === ''
-                            ? 'sidebar__link sidebar__link--active'
-                            : 'sidebar__link'
-                    }>
-                    Completed
-                </button>
+                    <button
+                        onClick={() => {
+                            setFilter('completed');
+                            setActiveCategory('');
+                        }}
+                        className={
+                            filter === 'completed' && activeCategory === ''
+                                ? 'sidebar__link sidebar__link--active'
+                                : 'sidebar__link'
+                        }
+                    >
+                        Completed
+                    </button>
+                </div>
             </nav>
 
             <div className="sidebar__categories">
                 <div className="sidebar__categories-header">
-                    <h3 className="sidebar__subtitle">Categories</h3>
+                    <h3 className="sidebar__subtitle">
+                        Categories
+                    </h3>
 
                     <button
                         className="sidebar__add-category-btn"
@@ -75,6 +88,7 @@ const Sidebar = ({
                         +
                     </button>
                 </div>
+
                 {
                     showCategoryInput && (
                         <div className="sidebar__category-form">
@@ -103,19 +117,37 @@ const Sidebar = ({
                             </p>
                         )
                         : (
-                            categories.map((category) => (
-                                <button
-                                    key={category}
-                                    onClick={() => setActiveCategory(category)}
-                                    className={
-                                        activeCategory === category
-                                            ? 'sidebar__category-item sidebar__category-item--active'
-                                            : 'sidebar__category-item'
-                                    }
-                                >
-                                    {category}
-                                </button>
-                            ))
+                            categories.map((category) => {
+
+                                const quantityTasksIntoCategory = tasks.filter((task) => {
+                                    return task.category === category;
+                                }).length;
+
+                                return (
+                                    <div
+                                        key={category}
+                                        className={
+                                            activeCategory === category
+                                                ? 'sidebar__category sidebar__category--active'
+                                                : 'sidebar__category'
+                                        }
+                                    >
+                                        <button
+                                            onClick={() => setActiveCategory(category)}
+                                            className="sidebar__category-name"
+                                        >
+                                            {category} ({quantityTasksIntoCategory})
+                                        </button>
+
+                                        <button
+                                            onClick={() => deleteCategory(category)}
+                                            className="sidebar__category-delete"
+                                        >
+                                            <FaTrashAlt />
+                                        </button>
+                                    </div>
+                                );
+                            })
                         )
                 }
             </div>

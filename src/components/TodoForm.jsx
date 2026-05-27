@@ -19,8 +19,10 @@ const TodoForm = ({
 
             <select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-            >
+                onChange={
+                    (e) => setSelectedCategory(e.target.value)
+                }
+                >   
                 <option value="">
                     No category
                 </option>

@@ -9,7 +9,10 @@ const TodoItem = ({
     setEditText,
     startEditTask,
     saveEditTask,
-    cancelEditTask
+    cancelEditTask,
+    editCategory,
+    setEditCategory,
+    categories
 }) => {
     return (
         <li
@@ -23,6 +26,27 @@ const TodoItem = ({
                 editingId === task.id
                     ? (
                         <div className="todo-item__edit">
+                            <span>Category:</span>
+                            <select
+                                value={editCategory}
+                                onChange={(e) => setEditCategory(e.target.value)}
+                            >
+                                <option value="">
+                                    No category
+                                </option>
+                                {
+                                    categories.map((category) => (
+                                        <option
+                                            key={category}
+                                            value={category}
+                                        >
+                                            {category}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+                            
+                            <span>Task:</span>
                             <input
                                 onChange={(e) => setEditText(e.target.value)}
                                 value={editText}

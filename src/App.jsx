@@ -7,6 +7,16 @@ import Header from "./layout/Header";
 import StatsCard from "./components/StatsCard";
 
 const App = () => {
+  const [write, setWrite] = useState('');
+  const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState('');
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [categoryName, setCategoryName] = useState('');
+  const [showCategoryInput, setShowCategoryInput] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [editCategory, setEditCategory] = useState('');
   const [tasks, setTasks] = useState(() => {
     const savedTasks = localStorage.getItem('savedTasks');
 
@@ -16,11 +26,6 @@ const App = () => {
       return [];
     }
   });
-  const [write, setWrite] = useState('');
-  const [editingId, setEditingId] = useState(null);
-  const [editText, setEditText] = useState('');
-  const [filter, setFilter] = useState('all');
-  const [search, setSearch] = useState('');
   const [categories, setCategories] = useState(() => {
     const savedCategories = localStorage.getItem('savedCategories');
 
@@ -30,10 +35,11 @@ const App = () => {
       return [];
     }
   });
-  const [categoryName, setCategoryName] = useState('');
-  const [showCategoryInput, setShowCategoryInput] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('savedTasks', JSON.stringify(tasks));
+    localStorage.setItem('savedCategories', JSON.stringify(categories));
+  }, [tasks, categories]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,7 +69,7 @@ const App = () => {
   };
 
   const toggleTask = (idToToggle) => {
-    setTasks(
+    const updatedTasks =
       tasks.map((task) => {
         if (task.id === idToToggle) {
           return {
@@ -71,14 +77,20 @@ const App = () => {
             completed: !task.completed
           }
         };
-        return task;
-      })
-    );
+        return task
+      });
+
+    const sortedTasks = updatedTasks.toSorted((a, b) => {
+      return a.completed - b.completed;
+    });
+
+    setTasks(sortedTasks);
   };
 
   const startEditTask = (task) => {
     setEditingId(task.id);
     setEditText(task.text);
+    setEditCategory(task.category);
   };
 
   const saveEditTask = (idToEdit) => {
@@ -89,7 +101,8 @@ const App = () => {
         if (task.id === idToEdit) {
           return {
             ...task,
-            text: editText
+            text: editText,
+            category: editCategory
           }
         }
         return task
@@ -97,12 +110,8 @@ const App = () => {
     )
     setEditingId(null);
     setEditText('');
+    setEditCategory('');
   };
-
-  useEffect(() => {
-    localStorage.setItem('savedTasks', JSON.stringify(tasks));
-    localStorage.setItem('savedCategories', JSON.stringify(categories));
-  }, [tasks, categories]);
 
   const completedTasks = tasks.filter((task) => {
     return task.completed
@@ -122,8 +131,8 @@ const App = () => {
       filter === 'all' ||
       filter === 'completed' && task.completed ||
       filter === 'pending' && !task.completed;
-    
-    const matchesCategory = 
+
+    const matchesCategory =
       activeCategory === '' || task.category === activeCategory;
 
     const normalizedText = task.text.toLowerCase();
@@ -152,6 +161,30 @@ const App = () => {
     setShowCategoryInput(false);
   };
 
+  const deleteCategory = (categoryToRemove) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this category?');
+
+    if (!confirmDelete) return;
+    setCategories(
+      categories.filter((category) => {
+        return category !== categoryToRemove
+      }));
+
+    setTasks(
+      tasks.map((task) => {
+        if (task.category === categoryToRemove) {
+          return {
+            ...task,
+            category: 'No category'
+          }
+        }
+        return task
+      })
+    );
+
+    setActiveCategory('');
+  };
+
   return (
     <main className="todo-app">
       <Sidebar
@@ -165,6 +198,8 @@ const App = () => {
         setShowCategoryInput={setShowCategoryInput}
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
+        deleteCategory={deleteCategory}
+        tasks={tasks}
       />
 
       <section className="todo-main">
@@ -199,6 +234,9 @@ const App = () => {
             startEditTask={startEditTask}
             saveEditTask={saveEditTask}
             cancelEditTask={cancelEditTask}
+            editCategory={editCategory}
+            setEditCategory={setEditCategory}
+            categories={categories}
           />
         </div>
       </section>

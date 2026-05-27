@@ -156,6 +156,21 @@
     letter-spacing: 0.03em;
 }
 
+.todo-item__edit select {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: $background-color;
+    border: 1px solid $border-color;
+    color: $text-primary;
+    min-width: 160px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.todo-item__edit select:focus {
+    border-color: $primary-color;
+}
+
 @media (max-width: 650px) {
     .todo-item {
         flex-direction: column;
@@ -169,5 +184,9 @@
     .todo-item__edit {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .todo-item__edit select {
+        width: 100%;
     }
 }

@@ -9,7 +9,10 @@ const TodoList = ({
     setEditText,
     startEditTask,
     saveEditTask,
-    cancelEditTask
+    cancelEditTask,
+    editCategory,
+    setEditCategory,
+    categories
 }) => {
     return (
         <ul className="todo-list">
@@ -32,6 +35,9 @@ const TodoList = ({
                             startEditTask={startEditTask}
                             saveEditTask={saveEditTask}
                             cancelEditTask={cancelEditTask}
+                            editCategory={editCategory}
+                            setEditCategory={setEditCategory}
+                            categories={categories}
                         />
                     )))
             }
