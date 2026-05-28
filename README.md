@@ -1,16 +1,112 @@
-# React + Vite
+# TaskFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TaskFlow is a modern task management application built with React and Sass, focused on productivity, task organization and clean user experience.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://task-flow-red-nine.vercel.app/
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+* Create, edit and delete tasks
+* Task priority system
+* Category management
+* Advanced filtering system
+* Search tasks in real time
+* Priority-based sorting
+* Responsive design
+* LocalStorage persistence
+* Smooth UI animations
+* Custom Hooks architecture
+* Modular React structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+* React
+* Sass (SCSS)
+* Vite
+* PNPM
+* JavaScript (ES6+)
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/taskflow.git
+```
+
+Enter the project folder:
+
+```bash
+cd taskflow
+```
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+Start development server:
+
+```bash
+pnpm run dev
+```
+
+---
+
+## Build
+
+Create production build:
+
+```bash
+pnpm run build
+```
+
+Preview production build:
+
+```bash
+pnpm run preview
+```
+
+---
+
+## Learning Goals
+
+This project was focused on practicing and improving:
+
+* React fundamentals
+* State management
+* Component architecture
+* Custom Hooks
+* Reusable utilities
+* Filtering systems
+* Responsive UI development
+* Clean code organization
+* Refactoring techniques
+
+---
+
+## Project Structure
+
+```txt
+src/
+├── components/
+├── hooks/
+├── utils/
+├── styles/
+└── App.jsx
+```
+
+---
+
+## Author
+
+Developed by Nicolas Tissoni.
