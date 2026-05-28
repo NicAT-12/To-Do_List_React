@@ -12,7 +12,9 @@ const TodoItem = ({
     cancelEditTask,
     editCategory,
     setEditCategory,
-    categories
+    categories,
+    editPriority,
+    setEditPriority
 }) => {
     return (
         <li
@@ -45,7 +47,17 @@ const TodoItem = ({
                                     ))
                                 }
                             </select>
-                            
+
+                            <span>Priority:</span>
+                            <select
+                                value={editPriority}
+                                onChange={(e) => setEditPriority(e.target.value)}
+                            >
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+
                             <span>Task:</span>
                             <input
                                 onChange={(e) => setEditText(e.target.value)}
@@ -77,13 +89,24 @@ const TodoItem = ({
                                 <small>
                                     {task.completed ? 'Completed Task' : 'Pending Task'}
                                 </small>
-                                {
-                                    task.category && (
-                                        <span className="todo-item__category">
-                                            {task.category}
-                                        </span>
-                                    )
-                                }
+
+                                <div className="todo-item__meta">
+                                    {
+                                        task.category && (
+                                            <span className="todo-item__category">
+                                                {task.category}
+                                            </span>
+                                        )
+                                    }
+
+                                    {
+                                        task.priority && (
+                                            <span className={`todo-item__priority todo-item__priority--${task.priority}`}>
+                                                {task.priority}
+                                            </span>
+                                        )
+                                    }
+                                </div>
                             </div>
 
                             <div className="todo-item__actions">

@@ -13,7 +13,8 @@ const Sidebar = ({
     activeCategory,
     setActiveCategory,
     deleteCategory,
-    tasks
+    tasks,
+    clearTasksCategory
 }) => {
     return (
         <aside className="sidebar">
@@ -140,7 +141,7 @@ const Sidebar = ({
                                         </button>
 
                                         <button
-                                            onClick={() => deleteCategory(category)}
+                                            onClick={() => deleteCategory(category, clearTasksCategory)}
                                             className="sidebar__category-delete"
                                         >
                                             <FaTrashAlt />

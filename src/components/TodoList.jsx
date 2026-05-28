@@ -12,7 +12,9 @@ const TodoList = ({
     cancelEditTask,
     editCategory,
     setEditCategory,
-    categories
+    categories,
+    editPriority,
+    setEditPriority
 }) => {
     return (
         <ul className="todo-list">
@@ -38,6 +40,8 @@ const TodoList = ({
                             editCategory={editCategory}
                             setEditCategory={setEditCategory}
                             categories={categories}
+                            editPriority={editPriority}
+                            setEditPriority={setEditPriority}
                         />
                     )))
             }

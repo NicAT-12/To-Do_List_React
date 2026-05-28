@@ -7,16 +7,24 @@
     border: 1px solid $border-color;
     padding: 18px;
     border-radius: 18px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 12px;
-    transition: 0.2s;
+
+    animation: taskFadeIn 0.25s ease;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .todo-item:hover {
     transform: translateY(-2px);
     border-color: #cbd5e1;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
 .todo-item::before {
@@ -35,8 +43,13 @@
 }
 
 .todo-item--completed {
-    opacity: 0.65;
-    text-decoration: line-through;
+    opacity: 0.75;
+    transform: scale(0.98);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
 }
 
 .todo-item--completed span {
@@ -59,6 +72,49 @@
     letter-spacing: 0.03em;
 }
 
+.todo-item__meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.todo-item__category {
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(139, 92, 246, 0.15);
+    color: $primary-color;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.todo-item__priority {
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: capitalize;
+}
+
+.todo-item__priority--high {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.todo-item__priority--medium {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.todo-item__priority--low {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+}
+
 .todo-item__actions {
     display: flex;
     align-items: center;
@@ -72,10 +128,14 @@
     height: 40px;
     border-radius: 10px;
     color: $surface-color;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.2s;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
 }
 
 .todo-item__delete-btn {
@@ -96,6 +156,12 @@
     transform: translateY(-2px);
 }
 
+.todo-item__delete-btn:active,
+.todo-item__toggle-btn:active,
+.todo-item__edit-btn:active {
+    transform: scale(0.95);
+}
+
 .todo-item__edit-btn:hover {
     background: $primary-hover;
 }
@@ -107,13 +173,20 @@
     width: 100%;
 }
 
-.todo-item__edit input {
+.todo-item__edit input,
+.todo-item__edit select {
     flex: 1;
     padding: 10px 12px;
     border-radius: 10px;
     background: $background-color;
     border: 1px solid $border-color;
     color: $text-primary;
+    transition: border-color 0.2s ease;
+}
+
+.todo-item__edit input:focus,
+.todo-item__edit select:focus {
+    border-color: $primary-color;
 }
 
 .todo-item__save-btn {
@@ -122,12 +195,19 @@
     padding: 10px 14px;
     border-radius: 10px;
     font-weight: 600;
-    transition: 0.2s;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
 }
 
 .todo-item__save-btn:hover {
     background: $primary-hover;
     transform: translateY(-2px);
+}
+
+.todo-item__save-btn:active {
+    transform: scale(0.95);
 }
 
 .todo-item__cancel-btn {
@@ -137,7 +217,11 @@
     padding: 10px 14px;
     border-radius: 10px;
     font-weight: 600;
-    transition: 0.2s;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
 }
 
 .todo-item__cancel-btn:hover {
@@ -145,30 +229,8 @@
     color: $text-primary;
 }
 
-.todo-item__category {
-    width: fit-content;
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: rgba(139, 92, 246, 0.15);
-    color: $primary-color;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-}
-
-.todo-item__edit select {
-    padding: 10px 12px;
-    border-radius: 10px;
-    background: $background-color;
-    border: 1px solid $border-color;
-    color: $text-primary;
-    min-width: 160px;
-    transition: 0.2s;
-    cursor: pointer;
-}
-
-.todo-item__edit select:focus {
-    border-color: $primary-color;
+.todo-item__cancel-btn:active {
+    transform: scale(0.95);
 }
 
 @media (max-width: 650px) {
@@ -188,5 +250,17 @@
 
     .todo-item__edit select {
         width: 100%;
+    }
+}
+
+@keyframes taskFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

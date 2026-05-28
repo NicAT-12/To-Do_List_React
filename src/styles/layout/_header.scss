@@ -38,6 +38,22 @@
     border-color: $primary-color;
 }
 
+.header__priority-filter {
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 1px solid $border-color;
+    background: $background-color;
+    color: $text-primary;
+    font-size: 0.95rem;
+    min-width: 180px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.header__priority-filter:focus {
+    border-color: $primary-color;
+}
+
 @media (max-width: 700px) {
     .header {
         flex-direction: column;
@@ -56,6 +72,10 @@
     }
 
     .header__search input {
+        width: 100%;
+    }
+
+    .header__priority-filter {
         width: 100%;
     }
 }

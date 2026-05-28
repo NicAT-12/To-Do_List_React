@@ -1,4 +1,4 @@
-const Header = ({search, setSearch}) => {
+const Header = ({ search, setSearch, priorityFilter, setPriorityFilter }) => {
     return (
         <header className="header">
             <div>
@@ -14,6 +14,18 @@ const Header = ({search, setSearch}) => {
                     onChange={(e) => setSearch(e.target.value)}
                 />
             </div>
+
+            
+            <select
+                value={priorityFilter}
+                onChange={(e) => setPriorityFilter(e.target.value)}
+                className="header__priority-filter"
+            >
+                <option value="all">All Priorities</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
         </header>
     );
 };
