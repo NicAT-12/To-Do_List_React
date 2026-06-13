@@ -110,3 +110,6 @@ src/
 ## Author
 
 Developed by Nicolas Tissoni.
+
+LinkedIn:
+www.linkedin.com/in/nicolas-tissoni-
